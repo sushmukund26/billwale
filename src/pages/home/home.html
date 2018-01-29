@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-navbar hideBackButton="true" class="nav">
+    <button ion-button menuToggle style="display:block !important;">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Dashboard
+</ion-title>
+    <button ion-button class="fRight" (click)="setup()" style="display:block !important;box-shadow: none">
+        <ion-icon name="md-refresh" class="fRight"></ion-icon>
+    </button>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+<!-- Search bar -->
+<ion-searchbar animated="true" class="searchBar"
+  [(ngModel)]="searchTerm"
+  [showCancelButton]="false"
+  (ionInput)="onInput($event)">
+</ion-searchbar>
+<!-- Search bar end -->
+
+<!-- List of cards -->
+<ion-list *ngIf="displayedOrders.length != 0" class="ordersist">
+
+  <ion-card *ngFor="let order of displayedOrders | orderBy : date : true"  (click)="getOrderDetails(order)">
+  <ion-card-header class="bold">
+    Order number : #{{order._id.orderId}}
+    <ion-badge class="alignR" [color]="order.isPaid ? 'secondary' : 'danger'">{{order.isPaid ? "PAID" : "UNPAID" }}</ion-badge>
+  </ion-card-header>
+  <ion-card-content>
+  <div style="padding:0 15px 15px 0">
+  <div>
+    <div class="alignL truncName">Name : {{order.customerInfo.length > 0 ? order.customerInfo[0].customerName : ""}}</div>
+    <div class="alignR truncDate">{{order.lastUpdatedDate | date: 'dd/MM/yyyy H:mm'}}</div>
+  </div>
+  <br>
+  <div>
+    <div class="alignL">Mobile : {{order.customerInfo.length > 0 ? order.customerInfo[0].customerMobile : ""}}</div>
+    <div class="alignR bold">Total : {{order.totalBillValue | currency:'INR':true:'1.2-2'}}</div>
+  </div>
+</div>
+  </ion-card-content>
+</ion-card>
+
+</ion-list>
+<p *ngIf="orders.length == 0" class="msg">No orders yet</p>
+
+</ion-content>

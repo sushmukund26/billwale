@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-navbar class="bill nav" align-title="center">
+    <ion-title>
+      Bill
+    </ion-title>
+    <button ion-button class="fRight" style="display:block !important;box-shadow: none" (click)="confirmPayment()">
+      <ion-icon *ngIf="!order.isPaid" name="md-checkmark" class="fRight"></ion-icon>
+    </button>
+  </ion-navbar>
+  </ion-header>
+
+<ion-content class="bill" padding>
+ <ion-card style="">
+   <ion-card-header text-center class="bold">
+   Billwale<br>Address Line 1<br>Address Line 2
+  </ion-card-header>
+  <ion-card-content>
+  <div style="padding:0 10px 10px 0">
+  <div>
+    <div>
+    <div class="alignL"><b>Name :</b> {{order.customerInfo.length > 0 ? order.customerInfo[0].customerName : ""}}</div>
+    <div class="alignR"><b>Order No.:</b> #{{order._id.orderId}}</div>
+  </div>
+  <br>
+    <div class="alignL"><b>Mode :</b> {{order.orderMode == 1 ? "Dine In" : "Take Away"}}</div>
+    <div class="alignR"><b>Date :</b>{{order.createdDate | date: 'dd/MM/yyyy H:mm'}}</div>
+  </div>
+  <br>
+  <hr>
+    <ion-row class="bold">
+    <ion-col col-3>Quantity</ion-col>
+
+    <ion-col col-6>Item Name</ion-col>
+
+    <ion-col col-3 style="text-align : right;">Price</ion-col>
+  </ion-row>
+    <ion-grid *ngFor="let item of order.items | orderBy : name" style="padding:0 !important;">
+  <ion-row>
+    <ion-col col-3>{{item.quantity}}</ion-col>
+
+    <ion-col col-6>{{item.item_info[0].itemName}}</ion-col>
+
+    <ion-col col-3 style="text-align : right;">{{order.orderMode == 1 ? item.item_info[0].itemRateDineIn * item.quantity : item.item_info[0].itemRateOnline * item.quantity}}</ion-col>
+  </ion-row>
+</ion-grid>
+
+  <hr>
+  <br>
+ <div class="alignR" style="width: 175px;text-align: right;">
+  <ion-row>
+    <ion-col col-5>Subtotal</ion-col>
+    <ion-col col-2>:</ion-col>
+    <ion-col col-5>{{subTotal | currency:'INR':true:'1.2-2'}}</ion-col>
+</ion-row>
+<ion-row>
+    <ion-col col-5>CGST</ion-col>
+    <ion-col col-2>:</ion-col>
+    <ion-col col-5>{{cgst | currency:'INR':true:'1.2-2'}}</ion-col>
+</ion-row>
+ <ion-row>
+    <ion-col col-5>SGST</ion-col>
+    <ion-col col-2>:</ion-col>
+    <ion-col col-5>{{sgst | currency:'INR':true:'1.2-2'}}</ion-col>
+</ion-row>
+<ion-row class="bold">
+    <ion-col col-5>Total</ion-col>
+    <ion-col col-2>:</ion-col>
+    <ion-col col-5>{{total | currency:'INR':true:'1.2-2'}}</ion-col>
+</ion-row>
+</div>
+</div>
+  </ion-card-content>
+</ion-card>
+</ion-content>

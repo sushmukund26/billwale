@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-navbar hideBackButton="false !important" class="nav">
+    <ion-title>
+      Order Details
+    </ion-title>
+    <button ion-button class="fRight" style="display:block !important;box-shadow: none" (click)="editOrder()">
+      <ion-icon *ngIf="!order.isPaid" name="create" class="fRight"></ion-icon>
+    </button>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="orderDetails" padding>
+
+  <ion-card style="" [ngClass]="(order.isPaid)?'orderPaidCard':'orderNotPaidCard'">
+  <ion-card-header class="bold">
+    Order number : #{{order._id.orderId}}
+    <ion-badge class="alignR" [color]="order.isPaid ? 'secondary' : 'danger'">{{order.isPaid ? "PAID" : "UNPAID" }}</ion-badge>
+  </ion-card-header>
+  <ion-card-content>
+  <div style="padding:0 15px 15px 0">
+  <div>
+    <div class="alignL truncName">Name : {{order.customerInfo.length > 0 ? order.customerInfo[0].customerName : ""}}</div>
+    <div class="alignR truncDate">{{order.createdDate | date: 'dd/MM/yyyy H:mm'}}</div>
+  </div>
+  <br>
+  <div>
+    <div class="alignL">Mobile : {{order.customerInfo.length > 0 ? order.customerInfo[0].customerMobile : ""}}</div>
+    <div class="alignR bold">Total : {{totalBillValue | currency:'INR':true:'1.2-2'}}</div>
+  </div>
+  <br>
+   <div>
+    <div *ngIf="order.isPaid && order.paymentModeUsed != ''" class="alignL">Paid by : {{order.paymentModeUsed}}</div>
+  </div>
+</div>
+  </ion-card-content>
+</ion-card>   <!-- Order details -->
+<div *ngIf="order.items.length != 0 && !order.isPaid">
+   <ion-card *ngFor="let item of order.items | orderBy : name">
+  <ion-card-content>
+  <div style="padding:0 15px 15px 0">
+  <div>
+    <div class="alignL">{{item.item_info[0].itemName}}</div>
+    <div class="alignR">
+      <div class="containerCounter" *ngIf="!item.yetToAdd">{{item.quantity}}
+      </div>
+</div>
+  </div>
+  <br>
+  <div>
+    <div class="alignL">{{order.orderMode == 1 ? item.item_info[0].itemRateDineIn : item.item_info[0].itemRateOnline}}</div>
+  </div>
+</div>
+  </ion-card-content>
+</ion-card>
+</div>
+<div style="background-color:white;width:100%">
+<button *ngIf="!order.isPaid" (click)="generateInvoice()" class="saveButton" ion-button block outline style="color:black;border-color:black;margin : 10px;width: calc(100% - 20px);">Generate Invoice</button>
+</div>
+
+</ion-content>

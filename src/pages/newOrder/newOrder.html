@@ -1,0 +1,140 @@
+<ion-header>
+   <ion-navbar class="nav">
+      <ion-title>
+         {{title}}
+      </ion-title>
+
+     <button ion-button class="fRight" style="display:block !important;box-shadow: none" *ngIf="isSearchBarClicked"  (click)="doneClicked()">
+         Done
+     </button>
+   </ion-navbar>
+</ion-header>
+
+<ion-content [ngClass]="(isSearchBarClicked)?'newOrderSearchBarClicked':'newOrder'" scroll = "false">
+<form #registerForm="ngForm">
+   <div *ngIf="!isSearchBarClicked">
+
+    <ion-row>
+        <ion-col>
+          <ion-list inset>
+
+            <ion-item>
+              <ion-input type="text" placeholder="Name*" name="name" (focus)="isInputSelected = true;" (focusout)="isInputSelected = false;" [(ngModel)]="order.name" required></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-input type="text" placeholder="Phone Number*" name="phone" (focus)="isInputSelected = true;" (focusout)="isInputSelected = false;" [(ngModel)]="order.customerMobile" required></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-input type="email" placeholder="Email Address" name="email" (focus)="isInputSelected = true;" (focusout)="isInputSelected = false;" [(ngModel)]="order.customerEmail"></ion-input>
+            </ion-item>
+
+          </ion-list>
+        </ion-col>
+      </ion-row>
+
+
+
+   </div>
+ </form>
+   <!-- Search bar -->
+   <div style="width:100%;background-color:white;">
+   <ion-searchbar animated="true" placeholder="Search Food Items"
+   [(ngModel)]="searchTerm"
+   [showCancelButton]="false"
+   (ionInput)="onInput($event)" (click) = "isSearchBarClicked = true;" [ngClass]="(!isSearchBarClicked)?'searchBarForFoodItems':'searchBarForFoodItemsSelected'">
+   </ion-searchbar>
+ </div>
+   <!-- Search bar end -->
+   <!-- Order details -->
+<div *ngIf="searchResult.length != 0 && isSearchBarClicked" style="margin-top:65px;">
+   <ion-card *ngFor="let item of searchResult | orderBy : name">
+  <ion-card-content>
+  <div style="padding:0 15px 15px 0">
+  <div>
+    <div class="alignL">{{item.itemName}}</div>
+    <div class="alignR">
+      <div class="containerAdd" *ngIf="item.yetToAdd">
+          <button (click)="add(item)" class="addButton">ADD</button>
+      </div>
+      <div class="containerCounter" *ngIf="!item.yetToAdd">
+              <ion-badge *ngIf="item.q < 10" color="danger">{{item.q}}</ion-badge>
+
+          <button (click)="decrementValue(item)" class="quantityButton">-</button> {{item.quantity}}
+          <button (click)="incrementValue(item)" [disabled]="item.q == 0" class="quantityButton">+</button>
+      </div>
+</div>
+  </div>
+  <br>
+  <div>
+    <div class="alignL">{{item.rate}}</div>
+  </div>
+</div>
+  </ion-card-content>
+</ion-card>
+</div>
+
+<div *ngIf= "!isEdit">
+<div *ngIf="orderItems.length != 0 && !isSearchBarClicked">
+   <ion-card *ngFor="let item of orderItems | orderBy : name">
+  <ion-card-content>
+  <div style="padding:0 15px 15px 0">
+  <div>
+    <div class="alignL">{{item.itemName}}</div>
+    <div class="alignR">
+      <div class="containerAdd" *ngIf="item.yetToAdd">
+          <button (click)="add(item)" class="addButton">ADD</button>
+      </div>
+      <div class="containerCounter" *ngIf="!item.yetToAdd">
+              <ion-badge *ngIf="item.q < 10" color="danger">{{item.q}}</ion-badge>
+
+          <button (click)="decrementValue(item)" class="quantityButton">-</button> {{item.quantity}}
+          <button (click)="incrementValue(item)" [disabled]="item.q == 0"  class="quantityButton">+</button>
+      </div>
+</div>
+  </div>
+  <br>
+  <div>
+    <div class="alignL">{{item.rate}}</div>
+  </div>
+</div>
+  </ion-card-content>
+</ion-card>
+</div>
+</div>
+<div *ngIf="isEdit && !isSearchBarClicked">
+<div *ngIf="order.items.length != 0 && !order.isPaid">
+   <ion-card *ngFor="let item of orderItems | orderBy : name">
+  <ion-card-content>
+  <div style="padding:0 15px 15px 0">
+  <div>
+    <div class="alignL">{{item.itemName}}</div>
+    <div class="alignR">
+     <div class="containerCounter" *ngIf="!item.yetToAdd">
+      <ion-badge *ngIf="item.q < 10" color="danger">{{item.q}}</ion-badge>
+          <button (click)="decrementValue(item)" class="quantityButton">-</button> {{item.quantity}}
+          <button (click)="incrementValue(item)" [disabled]="item.q == 0" class="quantityButton">+</button>
+      </div>
+</div>
+  </div>
+  <br>
+  <div>
+    <div class="alignL">{{item.rate}}</div>
+  </div>
+</div>
+  </ion-card-content>
+</ion-card>
+</div>
+</div>
+
+   <p *ngIf="orderItems.length == 0 && !isSearchBarClicked" class="msg">No items added</p>
+   <p *ngIf="searchResult.length == 0 && isSearchBarClicked" class="msgSearchResult">No items found</p>
+   <!-- Order details end -->
+   <!-- Save button -->
+   <div style="background-color:white;width:100%" *ngIf="!isSearchBarClicked && !isInputSelected">
+    <button ion-button block outline class="totalDetails" style="background-color:white;color:black;margin : 10px 10px 15px 10px;border-bottom:none;width: calc(100% - 20px);">Item(s) : {{orderItems.length}} | Total : {{isEdit ? total : order.totalBillValue | currency:'INR':true:'1.2-2'}} (without tax)</button>
+   <button [disabled]="!registerForm.form.valid || orderItems.length == 0" ion-button block outline class="saveButton" (click)="saveButton()" style="color:black;border-color:black;margin : 10px;width: calc(100% - 20px);">Save</button>
+ </div>
+   <!-- Save button end -->
+</ion-content>

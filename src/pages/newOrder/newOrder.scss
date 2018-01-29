@@ -1,0 +1,65 @@
+page-contact {
+
+}
+
+.saveButton {
+	position : fixed;
+	bottom : 5px;
+}
+
+
+.totalDetails {
+	position : fixed;
+	bottom : 36px;
+	border-color : black;
+}
+.item-md {
+	padding-left : 10px !important;
+	padding-right : 10px !important;
+}
+
+.searchBarForFoodItems {
+	    margin-top: 10px;
+	    z-index : 100;
+}
+
+.searchBarForFoodItemsSelected {
+	position : fixed;
+	top : 56px;
+	z-index : 100;
+}
+
+.msgSearchResult {
+	padding-top : 75px !important;	
+	color : #dedede;
+	text-align : center;
+}
+
+.msg {
+	padding-top : 45px !important;	
+	color : #dedede;
+	text-align : center;
+}
+
+.newOrder > .scroll-content {
+	margin-bottom:80px;
+}
+
+.newOrderSearchBarClicked > .scroll-content {
+	margin-bottom:0px;
+}
+
+.orderDetails > .scroll-content {
+	margin-bottom:60px;
+}
+
+.col {
+	    padding: 0 !important;
+}
+
+.bill > .card-md {
+	padding-bottom: 10px;
+}
+.text-input {
+	    margin: 5px 5px 5px 15px !important;
+}

@@ -1,0 +1,52 @@
+<ion-header>
+   <ion-navbar class="nav">
+      <ion-title>
+         Update
+      </ion-title>
+     <button ion-button class="fRight" (click)="menuClicked()" style="display:block !important;box-shadow: none">
+         <ion-icon name="more" class="fRight" style="width:30px;text-align: center;"></ion-icon>
+   </button>
+   </ion-navbar>
+</ion-header>
+
+<ion-content class="updateItems" scroll = "false">
+   <!-- Search bar -->
+   <div style="width:100%;background-color:white;">
+   <ion-searchbar animated="true" placeholder="Search Food Items"
+   [(ngModel)]="searchTerm"
+   [showCancelButton]="false"
+   (ionInput)="onInput($event)" class= "searchBarForFoodItemsSelected">
+   </ion-searchbar>
+ </div>
+   <!-- Search bar end -->
+
+   <!-- Order details -->
+<div style="margin-top:65px;">
+   <ion-card *ngFor="let item of searchResult | orderBy : name">
+  <ion-card-content>
+  <div style="padding:0 15px 15px 0">
+  <div>
+    <div class="alignL">{{item.itemName}}</div>
+    <div class="alignR" style="width:100px;">
+      <div class="alignL"> <ion-input type="text" style="width:50px !important;border: 1px black solid;height: 30px;" [(ngModel)] = "item.quantity" (change)="onChange(item)"></ion-input></div>
+
+
+<div class="alignR" style="font-size: 26px;">
+<ion-icon *ngIf="item.isAvailable == 1" (click)="changeAvailability(item)" name="md-checkmark-circle" style="color : #1E656D;"></ion-icon>
+<ion-icon *ngIf="item.isAvailable == 0" (click)="changeAvailability(item)" name="md-close-circle" style="color: #f53d3d;"></ion-icon>
+ </div>
+</div>
+  </div>
+  <br>
+  <div>
+    <div class="alignL">{{item.rate}}</div>
+  </div>
+</div>
+  </ion-card-content>
+</ion-card>
+</div>
+
+   <p *ngIf="searchResult.length == 0" class="msgSearchResult">No items found</p>
+   <!-- Order details end -->
+
+</ion-content>

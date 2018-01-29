@@ -1,0 +1,120 @@
+page-home {
+
+}
+
+.toolbar {
+  &.toolbar-md { //material design only
+    &.nav {
+      position: relative;
+      .title-md { //material design only
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        text-align: center;
+      }
+    }
+  }
+}
+
+.back-button, .show-back-button {
+  z-index: 1;
+}
+.searchBar {
+	width : 100%;
+	padding : 0 !important;
+	position : fixed;
+	top : 56px;
+	z-index : 100;
+}
+
+.addIcon {
+	position : fixed;
+	bottom : 56px;
+	right : 10px;
+	font-size : 50px;
+}
+
+.ordersist {
+	padding-top : 45px !important;
+}
+
+.msg {
+	padding-top : 45px !important;
+	color : #dedede;
+	text-align : center;
+}
+
+ .button , .addButton {
+	background-color : #1E656D !important;
+	color : white !important;
+}
+
+.toolbar-background , .toolbar-title-md , .bar-button-default-md, .bar-button-clear-md-default, .bar-button-md-default {
+	background-color : #1E656D !important;
+		color : white !important;
+
+}
+
+.addButton {
+	padding: 10px;
+	border: solid 1px black;
+}
+
+.content-md, .input-cover, .item, .card, .searchbar-md , .searchbar-input, .loading-md ,.loading-wrapper{
+
+	background-color : white !important;
+}
+
+.alert-wrapper , .alert-button , .loading-wrapper{
+		background-color : #1E656D !important;
+		color : white !important;
+
+
+}
+
+.searchbar-clear-icon {
+	background-color : white !important;
+}
+
+.truncName {
+	white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 55%;
+}
+
+.truncDate {
+	white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 40%;
+}
+
+.input-has-focus, .input-cover, {
+	z-index: -1;
+}
+
+.alert-md .alert-button {
+	color : black;
+}
+
+.quantityButton {
+	background-color: #1E656D!important;
+    color: white !important;
+    padding: 5px 8px;
+ 	border: solid 1px black;
+}
+
+.updateItems > .text-input-md {
+	margin : 0 !important;
+}
+
+.bill > .back-button {
+	display : block;
+}
+
+.alert-radio-label {
+	color : white !important;
+}
