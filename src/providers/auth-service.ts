@@ -55,9 +55,9 @@ export class AuthService {
             for (var user of existingUsers) {
             console.log(user.name);
 
-            if(credentials.password === user.id && credentials.email === user.name) {
+            if(credentials.password === user.password && credentials.email === user.outletId) {
               access = true;
-                      this.currentUser = new User(user.id, user.name);
+                      this.currentUser = new User(user.outletId, user.password);
 
             }
         // observer.next(access);
