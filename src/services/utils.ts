@@ -1,6 +1,4 @@
-import {Injectable, forwardRef, Inject} from '@angular/core';
-
-const AuthServiceFwd = forwardRef(() => AuthServiceFwd);
+import {Injectable} from '@angular/core';
 
 @Injectable()
 export class utils {

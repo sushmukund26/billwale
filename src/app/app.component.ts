@@ -4,8 +4,6 @@ import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {NativeStorage} from '@ionic-native/native-storage';
 
-import {AuthService} from '../providers/auth-service';
-
 import {LoginPage} from '../pages/login/login';
 import {HomePage} from '../pages/home/home';
 import {NewOrder} from '../pages/newOrder/newOrder';
@@ -25,7 +23,7 @@ export class MyApp {
   platform;
   utils;
 
-  constructor(platform: Platform, screenOrientation: ScreenOrientation, statusBar: StatusBar,utils: utils, splashScreen: SplashScreen, private auth: AuthService, private nativeStorage: NativeStorage) {
+  constructor(platform: Platform, screenOrientation: ScreenOrientation, statusBar: StatusBar,utils: utils, splashScreen: SplashScreen, private nativeStorage: NativeStorage) {
     this.platform = platform;
     this.utils = utils;
 
