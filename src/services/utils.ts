@@ -1,16 +1,16 @@
 import {Injectable} from '@angular/core';
+import {AuthService} from "../providers/auth-service";
 
 @Injectable()
 export class utils {
   observable;
-  constructor() {
+  constructor(private auth: AuthService) {
 
   }
-  //   getUserDetails() {
-  //   var currentUser = this.auth.currentUser;
-  //   console.log("%%%%%%%%");
-  //   console.log(currentUser);
-  // }
+    getUserDetails() {
+    var currentUser = this.auth.currentUser;
+    return currentUser.name;
+  }
 
   generateArray(obj) {
     return Object.keys(obj).map((key) => {
