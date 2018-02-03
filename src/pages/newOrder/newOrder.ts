@@ -360,12 +360,14 @@ export class NewOrder {
       } else {
         //new order
         this.httpService.getLatestOrder().then(response => {
-          if (response.length == 0) {
-            this.order['orderId'] = "1";
-          } else {
+          if (response.length != 0 && !isNaN(response[0].orderId) && typeof +response[0].orderId === 'number') {
             var latestOrderID = +response[0].orderId;
             //prepare order
+            console.log(latestOrderID);
             this.order['orderId'] = latestOrderID + 1;
+          }
+          else {
+            this.order['orderId'] = "1";
           }
           this.order['orderItems'] = this.orderItems;
           this.order['createdDate'] = new Date().toISOString();
