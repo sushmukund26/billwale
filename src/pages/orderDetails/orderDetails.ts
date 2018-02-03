@@ -22,7 +22,7 @@ export class OrderDetails {
   constructor(public navCtrl: NavController, public navParams: NavParams, private utils: utils, private httpService: httpService, public modalCtrl: ModalController, private errorHandlingService: errorHandlingService) {
     this.order = this.navParams.get("order");
     this.totalBillValue = this.navParams.get("totalBillValue");
-    this.paymentModes = this.getPaymentModes();
+    this.getPaymentModes();
     this.order.paymentModeUsed = '';
 
     console.log(":" + this.navParams.get("fromHome"));

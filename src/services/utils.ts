@@ -1,15 +1,20 @@
 import {Injectable} from '@angular/core';
-import {AuthService} from "../providers/auth-service";
+import {NativeStorage} from "@ionic-native/native-storage";
+import {Observable} from "rxjs/Observable";
 
 @Injectable()
 export class utils {
   observable;
-  constructor(private auth: AuthService) {
+  constructor(private nativeStorage: NativeStorage) {
 
   }
-    getUserDetails() {
-    var currentUser = this.auth.currentUser;
-    return currentUser.name;
+  getCurrentUserDetails(): Promise<any> {
+    return this.nativeStorage.getItem('currentUser').then(response => {
+      console.log("here from get()");
+      return response.currentUser;
+    }).catch((error: Response | any) => {
+      return Observable.throw(error.json());
+    })
   }
 
   generateArray(obj) {

@@ -337,7 +337,8 @@ export class NewOrder {
             }
             console.log("==========");
             console.log(this.orderItems);
-            this.order['totalBillValue'] = subTotal + cgst + sgst;
+            this.order['totalBillValue'] = Math.round(subTotal + cgst + sgst);
+            this.order['createdBy'] = this.httpService.getOutletId();
             this.httpService.updateOrder(this.order);
             console.log("==========");
             console.log(this.removedItems);
@@ -395,8 +396,8 @@ export class NewOrder {
 
                 }
               }
-              this.order['totalBillValue'] = subTotal + cgst + sgst;
-
+              this.order['totalBillValue'] = Math.round(subTotal + cgst + sgst);
+              this.order['createdBy'] = this.httpService.getOutletId();
               this.httpService.postOrder(this.order);
               console.log(this.orderItems);
 

@@ -22,6 +22,7 @@ export class HomePage {
   }
 
   ionViewDidEnter() {
+    this.httpService.fetchCurrentUser();
     console.log(this.navParams.get("refresh"));
     console.log(this.navParams.get("refresh") != 0 || this.navParams.get("refresh") != undefined);
     // if(this.navParams.get("order") != undefined) {

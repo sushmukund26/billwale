@@ -3,12 +3,14 @@ import {Http, Headers, RequestOptions, Response} from '@angular/http';
 import {Observable} from 'rxjs';
 import 'rxjs/add/operator/map';
 import {utils} from "./utils";
+import {User} from "../providers/auth-service";
 
 @Injectable()
 export class httpService {
   private headers;
   private requestOptions: RequestOptions;
   private baseUrl: string;
+  private currentUser: User;
 
   constructor(public http: Http, public utils: utils) {
     this.baseUrl = "https://billwale.herokuapp.com";
@@ -18,11 +20,27 @@ export class httpService {
     })
   }
 
-  getOutletId() {
-    return this.utils.getUserDetails();
+  fetchCurrentUser() {
+    var currentUser: User;
+    return this.utils.getCurrentUserDetails().then(response => {
+      console.log("Got response:", response);
+      currentUser = response;
+      console.log("euqgfjdkjfdhkjdfhs");
+      console.log(currentUser);
+      this.currentUser = currentUser;
+    }).catch(error => {
+    });
   }
+
+  getCurrentUser() {
+    return this.currentUser;
+  }
+  getOutletId() {
+    return this.currentUser.outletId;
+  }
+
   getItems(): Promise<any> {
-    return this.http.get(this.baseUrl + '/items/outletID/'+this.getOutletId(), this.requestOptions).map(response => {
+    return this.http.get(this.baseUrl + '/items/outletID/'+this.currentUser.outletId, this.requestOptions).map(response => {
       return response.json() || {success: false, message: "No response from server"};
     }).catch((error: Response | any) => {
       return Observable.throw(error.json());
@@ -30,7 +48,7 @@ export class httpService {
   }
 
   getPaymentModes(): Promise<any> {
-    return this.http.get(this.baseUrl + '/paymentModes/outletID/'+this.getOutletId(), this.requestOptions).map(response => {
+    return this.http.get(this.baseUrl + '/paymentModes/outletID/'+this.currentUser.outletId, this.requestOptions).map(response => {
       return response.json() || {success: false, message: "No response from server"};
     }).catch((error: Response | any) => {
       return Observable.throw(error.json());
@@ -38,7 +56,9 @@ export class httpService {
   }
 
   getOrders(): Promise<any> {
-    return this.http.get(this.baseUrl + '/order/outletID/'+this.getOutletId(), this.requestOptions).map(response => {
+    console.log("PPPPPP");
+    console.log(this.currentUser.outletId);
+    return this.http.get(this.baseUrl + '/order/outletID/'+this.currentUser.outletId, this.requestOptions).map(response => {
       return response.json() || {success: false, message: "No response from server"};
     }).catch((error: Response | any) => {
       return Observable.throw(error.json());
@@ -55,7 +75,7 @@ export class httpService {
 
   getLatestOrder(): Promise<any> {
 
-    return this.http.get(this.baseUrl + '/order/latest', this.requestOptions).map(response => {
+    return this.http.get(this.baseUrl + '/order/latest/outletID/'+this.currentUser.outletId, this.requestOptions).map(response => {
       return response.json() || {success: false, message: "No response from server"};
     }).catch((error: Response | any) => {
       return Observable.throw(error.json());
@@ -71,7 +91,7 @@ export class httpService {
   }
 
   getTaxDetails(): Promise<any> {
-    return this.http.get(this.baseUrl + '/taxdetails/outletID/'+this.getOutletId(), this.requestOptions).map(response => {
+    return this.http.get(this.baseUrl + '/taxdetails/outletID/'+this.currentUser.outletId, this.requestOptions).map(response => {
       return response.json() || {success: false, message: "No response from server"};
     }).catch((error: Response | any) => {
       return Observable.throw(error.json());
@@ -95,6 +115,8 @@ export class httpService {
   }
 
     updateOrder(data) {
+      console.log("========data==");
+      console.log(data);
     this.http.put(this.baseUrl + '/order', data, this.requestOptions)
 
       .subscribe(data => {

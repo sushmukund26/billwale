@@ -16,7 +16,7 @@ import {utils} from "../../services/utils";
 })
 export class LoginPage {
   loading: Loading;
-  registerCredentials = {email: '', password: ''};
+  registerCredentials = {outletId: '', password: ''};
   private existingUsers: any;
 
   constructor(private nav: NavController,private httpService: httpService, private auth: AuthService,private utils: utils, private errorHandlingService: errorHandlingService, private loadingCtrl: LoadingController, private nativeStorage: NativeStorage) {
